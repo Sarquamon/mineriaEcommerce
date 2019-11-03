@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import "./Navbar.css";
 import {Link as NavLink} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import logo from "../../img/logo.png";
 
 export class Navbar extends Component {
@@ -11,7 +12,7 @@ export class Navbar extends Component {
           <div className="container">
             <NavLink to="/" className="navbar-brand js-scroll-trigger">
               <img src={logo} width="50px" alt="appLog" />
-              MyPets
+              Doggies
             </NavLink>
             <button
               className="navbar-toggler navbar-toggler-right"
@@ -29,12 +30,12 @@ export class Navbar extends Component {
               <ul className="navbar-nav ml-auto my-2 my-lg-0">
                 <li className="nav-item">
                   <NavLink smooth to="/" className="nav-link js-scroll-trigger">
-                    Inicio
+                    <FontAwesomeIcon icon="home" /> Inicio
                   </NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink to="/store" className="nav-link js-scroll-trigger">
-                    Tienda
+                    <FontAwesomeIcon icon="store-alt" /> Tienda
                   </NavLink>
                 </li>
               </ul>
