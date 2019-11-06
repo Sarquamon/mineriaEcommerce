@@ -5,14 +5,13 @@ export class Store extends Component {
   render() {
     return (
       <div>
-        <h5>Store</h5>
-        <div className="container">
+        <div className="container mt-3">
           <div className="row">
-            <div className="col-md-3"></div>
-            <div className="col-md-6">
+            <div className="col-lg-3"></div>
+            <div className="col-lg-6">
               <SearchForm />
             </div>
-            <div className="col-md-3"></div>
+            <div className="col-lg-3"></div>
           </div>
         </div>
       </div>
