@@ -31,7 +31,7 @@ export class Product extends Component {
         {this.state.activeProduct.length !== 0 && (
           <div>
             <h1>{product.productName}</h1>
-            <Link to="/">
+            <Link to="/store/">
               <button className="btn btn-outline-primary">Regresar</button>
             </Link>
           </div>

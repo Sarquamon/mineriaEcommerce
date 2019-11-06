@@ -26,6 +26,17 @@ export class Store extends Component {
       });
   };
 
+  componentDidMount = () => {
+    const json = localStorage.getItem("products");
+    const products = JSON.parse(json);
+    this.setState({products});
+  };
+
+  componentDidUpdate = () => {
+    const products = JSON.stringify(this.state.products);
+    localStorage.setItem("products", products);
+  };
+
   render() {
     return (
       <div>
