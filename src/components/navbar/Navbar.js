@@ -29,7 +29,7 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarResponsive">
           <ul className="navbar-nav ml-auto my-2 my-lg-0">
             <li className="nav-item">
-              <NavLink smooth to="/" className="nav-link js-scroll-trigger">
+              <NavLink to="/" className="nav-link js-scroll-trigger">
                 <FontAwesomeIcon icon="home" /> Inicio
               </NavLink>
             </li>
