@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {Link} from "react-router-dom";
 import axios from "axios";
 
 const vetAPI = "https://newvetsapi.herokuapp.com";
@@ -16,7 +17,7 @@ export class Product extends Component {
       .get(`${vetAPI}/product/name/${productName}`)
       .then(res => {
         this.setState({activeProduct: res.data[0]});
-        console.log(this.state.activeProduct);
+        // console.log(this.state.activeProduct);
       })
       .catch(err => {
         console.log(err);
@@ -24,9 +25,19 @@ export class Product extends Component {
   };
 
   render() {
-    console.log(this.props);
-
-    return <h1>Hola!</h1>;
+    const product = this.state.activeProduct;
+    return (
+      <div>
+        {this.state.activeProduct.length !== 0 && (
+          <div>
+            <h1>{product.productName}</h1>
+            <Link to="/">
+              <button className="btn btn-outline-primary">Regresar</button>
+            </Link>
+          </div>
+        )}
+      </div>
+    );
   }
 }
 
