@@ -1,7 +1,31 @@
 import React, {Component} from "react";
+import axios from "axios";
+
 import SearchForm from "../searchForm/SearchForm";
+import Products from "../products/Products";
+
+const vetAPI = "https://newvetsapi.herokuapp.com";
 
 export class Store extends Component {
+  state = {
+    products: []
+  };
+
+  getProduct = e => {
+    const productName = e.target.elements.productName.value;
+
+    e.preventDefault();
+
+    axios
+      .get(`${vetAPI}/product/name/${productName}`)
+      .then(res => {
+        this.setState({products: res.data});
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   render() {
     return (
       <div>
@@ -9,7 +33,8 @@ export class Store extends Component {
           <div className="row">
             <div className="col-lg-3"></div>
             <div className="col-lg-6">
-              <SearchForm />
+              <SearchForm getProduct={this.getProduct} />
+              <Products products={this.state.products} />
             </div>
             <div className="col-lg-3"></div>
           </div>
