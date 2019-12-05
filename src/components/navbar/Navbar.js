@@ -4,7 +4,7 @@ import {Link as NavLink} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import logo from "../../img/logo.png";
 
-function Navbar() {
+const Navbar = () => {
   return (
     <nav
       className={`navbar navbar-expand-lg navbar-light sticky-nav custom-nav`}
@@ -43,6 +43,6 @@ function Navbar() {
       </div>
     </nav>
   );
-}
+};
 
 export default Navbar;

@@ -11,13 +11,12 @@ export class Product extends Component {
   };
 
   componentDidMount = () => {
-    const productName = this.props.location.state.productName;
+    const productID = this.props.location.state.productID;
 
     axios
-      .get(`${vetAPI}/product/name/${productName}`)
+      .get(`${vetAPI}/product/id/${productID}`)
       .then(res => {
-        this.setState({activeProduct: res.data[0]});
-        // console.log(this.state.activeProduct);
+        this.setState({activeProduct: res.data});
       })
       .catch(err => {
         console.log(err);
@@ -29,12 +28,15 @@ export class Product extends Component {
     return (
       <div>
         {this.state.activeProduct.length !== 0 && (
-          <div>
-            <h1>{product.productName}</h1>
-            <h2>{product.productDesc}</h2>
-            <Link to="/store/">
-              <button className="btn btn-outline-primary">Regresar</button>
-            </Link>
+          <div className="container">
+            <div className="row justify-content-around">
+              <div className="col-lg-12">
+                <h1>{product.productName}</h1>
+              </div>
+              <Link to="/store/">
+                <button className="btn btn-outline-primary">Regresar</button>
+              </Link>
+            </div>
           </div>
         )}
       </div>
