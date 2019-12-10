@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Link} from "react-router-dom";
+
 import axios from "axios";
 
 import "./LoginRegister.css";
@@ -9,77 +9,83 @@ import LoginForm from "./LoginForm/LoginForm";
 const vetAPI = "https://newvetsapi.herokuapp.com";
 
 const checkEmail = async useremail => {
-  axios
-    .get(`${vetAPI}/user/email/${useremail}`)
-    .then(res => {
-      console.log(res.data);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+	const result = await axios.get(`${vetAPI}/user/email/${useremail}`);
+
+	return result.data.userEmail;
 };
 
-const register = async e => {
-  const username = e.target.elements.username.value;
-  const userlastname = e.target.elements.userlastname.value;
-  const useremail = e.target.elements.useremail.value;
-  const userpwd = e.target.elements.userpwd.value;
-  const userpwd2 = e.target.elements.userpwd2.value;
+const register = e => {
+	// const username = e.target.elements.username.value;
+	// const userlastname = e.target.elements.userlastname.value;
+	// const useremail = e.target.elements.useremail.value;
+	// const userpwd = e.target.elements.userpwd.value;
+	// const userpwd2 = e.target.elements.userpwd2.value;
 
-  e.preventDefault();
+	e.preventDefault();
+};
 
-  const available = await checkEmail(useremail);
+const login = async e => {
+	const useremail = e.target.elements.useremail.value;
+	// const userpwd = e.target.elements.userpwd.value;
 
-  console.log(available);
+	e.preventDefault();
+
+	const available = await checkEmail(useremail);
+	console.log(available);
+	if (available) {
+		console.log(`Existe`);
+	} else {
+		console.log(`no existe`);
+	}
 };
 
 export const LoginRegister = () => {
-  const [loginBtn, setloginBtn] = useState("invisible");
-  const [registerBtn, setregisterBtn] = useState("visible");
+	const [loginBtn, setloginBtn] = useState("visible");
+	const [registerBtn, setregisterBtn] = useState("invisible");
 
-  const changeView = buttonId => {
-    if (buttonId === "loginBtn") {
-      console.log("Login");
+	const changeView = buttonId => {
+		if (buttonId === "loginBtn") {
+			console.log("Login");
 
-      setregisterBtn("invisible");
-      setloginBtn("visible");
-    } else {
-      console.log("Register");
-      setloginBtn("invisible");
-      setregisterBtn("visible");
-    }
-  };
+			setregisterBtn("invisible");
+			setloginBtn("visible");
+		} else {
+			console.log("Register");
+			setloginBtn("invisible");
+			setregisterBtn("visible");
+		}
+	};
 
-  return (
-    <div className="container justify-content-around form">
-      <div className="row mb-3">
-        <div className="col-lg-12 text-center">
-          <div className="btn-group">
-            <button
-              className={`btn btn-outline-primary btn-lg `}
-              onClick={e => changeView("loginBtn", e)}
-            >
-              Iniciar Sesi&oacute;n
-            </button>
-            <button
-              className={`btn btn-outline-primary btn-lg`}
-              onClick={e => changeView("registerBtn", e)}
-            >
-              Registrarse
-            </button>
-          </div>
-        </div>
-      </div>
-      <div className="row">
-        <div className={`col-lg-12 ${registerBtn}`}>
-          <RegisterForm register={register} />
-        </div>
-        <div className={`col-lg-12 ${loginBtn}`}>
-          <LoginForm />
-        </div>
-      </div>
-    </div>
-  );
+	return (
+		<div className="container justify-content-around form">
+			<div className="row mb-3">
+				<div className="col-lg-12 text-center">
+					<div className="btn-group">
+						<button
+							className={`btn btn-outline-primary btn-lg `}
+							onClick={e => changeView("loginBtn", e)}
+						>
+							Iniciar Sesi&oacute;n
+						</button>
+						<button
+							className={`btn btn-outline-primary btn-lg`}
+							onClick={e => changeView("registerBtn", e)}
+						>
+							Registrarse
+						</button>
+					</div>
+				</div>
+			</div>
+			<div className="row">
+				<div className={`col-lg-12 ${registerBtn}`}>
+					<RegisterForm register={register} />
+				</div>
+				<div className={`col-lg-12 ${loginBtn}`}>
+					<LoginForm login={login} />
+				</div>
+			</div>
+		</div>
+	);
 };
 
 export default LoginRegister;
