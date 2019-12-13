@@ -28,7 +28,7 @@ const Navbar = () => {
 				<div className="collapse navbar-collapse" id="responsiveNavbar">
 					<ul className="navbar-nav mr-auto">
 						<li className="nav-item">
-							<NavLink to="/" className="nav-link">
+							<NavLink to="/store" className="nav-link">
 								<FontAwesomeIcon icon="store-alt" size="1x" />
 							</NavLink>
 						</li>
