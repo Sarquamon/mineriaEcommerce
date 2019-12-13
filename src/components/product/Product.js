@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import axios from "axios";
 
+import OtherUsersBought from "./otherUsersBought";
+
 const vetAPI = "http://localhost:2000";
 
 //component for individual product
@@ -78,25 +80,22 @@ export class Product extends Component {
 									/>
 									<div className="card-body">
 										<h4 className="card-title">{product.productName}</h4>
-										<h4 className="card-text text-right">
+										<h4 className="card-text text-right mb-4">
 											{product.productPrice}
 										</h4>
 										{recommendedProduct.productName ? (
 											<div>
-												<h5 className="card-text">
-													Otros usuarios comparon este producto tambi&eacute;n
-													con el actual:
-												</h5>
-												<p className="card-text mb-3">
-													{recommendedProduct.productName}
-												</p>
+												<p className="card-text">Otros usuarios comparon:</p>
+												<OtherUsersBought
+													recommendedproduct={recommendedProduct}
+												/>
 											</div>
 										) : (
 											<h5 className="card-text mb-3">
 												No hay recomendacion para este producto
 											</h5>
 										)}
-										<div className="btn-group">
+										<div className="btn-group mt-3">
 											<Link to="/store/">
 												<button className="btn btn-outline-primary">
 													Regresar

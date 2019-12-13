@@ -17,6 +17,7 @@ const Products = props => {
 										src={product.productImage}
 										className="card-img-top"
 										alt=""
+										height="190px"
 									/>
 									<div className="card-body">
 										<h5 className="card-title">{product.productName}</h5>
