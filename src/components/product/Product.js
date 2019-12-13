@@ -32,8 +32,6 @@ export class Product extends Component {
 			.get(`${vetAPI}/order/checkSimilarProd/${productID}`)
 			.then(res => {
 				if (res) {
-					// console.log(res);
-
 					if (res.data.count > 0) {
 						// console.log("Si hay");
 
