@@ -11,6 +11,11 @@ const vetAPI = "http://localhost:2000";
 const Store = () => {
 	const [products, setProducts] = useState([]);
 	const [loading, setLoading] = useState(true);
+	const productHistory = [];
+
+	const onHistoryAdd = currentProduct => {
+		productHistory.push(currentProduct);
+	};
 
 	const getAllItems = async () => {
 		const response = await axios.get(`${vetAPI}/product`);
@@ -42,9 +47,18 @@ const Store = () => {
 		axios
 			.get(`${vetAPI}/product/searchName/${productName}`)
 			.then(res => {
-				// console.log(res.data);
+				const products = [];
 
-				setProducts(res.data.products);
+				// console.log(res.data.products);
+
+				res.data.products.forEach(element => {
+					products.push(element);
+				});
+				if (products.length > 0) {
+					setProducts(products);
+				} else {
+					setProducts(null);
+				}
 			})
 			.catch(err => {
 				console.log(err);
@@ -68,7 +82,7 @@ const Store = () => {
 								<ReactLoading type={"balls"} color={"#000000"} width={790} />
 							</div>
 						) : (
-							<Products products={products} />
+							<Products products={products} onHistoryAdd={onHistoryAdd} />
 						)}
 					</div>
 				</div>

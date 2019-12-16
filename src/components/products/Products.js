@@ -14,7 +14,7 @@ const Products = props => {
 							<div className="col-lg-4 mt-4 mb-2" key={product._id}>
 								<div className="card">
 									<img
-										src={product.productImage}
+										src={`${product.productImage}`}
 										className="card-img-top"
 										alt=""
 										height="190px"
@@ -33,7 +33,12 @@ const Products = props => {
 												}
 											}}
 										>
-											<button className="btn btn-primary">Ver producto</button>
+											<button
+												// onClick={() => props.onHistoryAdd(product._id)}
+												className="btn btn-primary"
+											>
+												Ver producto
+											</button>
 										</Link>
 									</div>
 								</div>
