@@ -12,9 +12,40 @@ const Store = () => {
 	const [products, setProducts] = useState([]);
 	const [loading, setLoading] = useState(true);
 	const productHistory = [];
+	const tempId = "5df0c2af265d8b078c80ec89";
 
 	const onHistoryAdd = currentProduct => {
-		productHistory.push(currentProduct);
+		if (productHistory[0] === null) {
+			productHistory[0] = currentProduct;
+		} else {
+			const sameVal = productHistory.find(
+				productId => productId === currentProduct
+			);
+			if (!sameVal) {
+				// console.log(`Not same: ${sameVal}`);
+				productHistory.push(currentProduct);
+				updateUserProductHistory();
+				// console.log(`products: ${productHistory}`);
+			}
+			// else {
+			// 	console.log(`Same: ${sameVal}`);
+			// }
+		}
+	};
+
+	const updateUserProductHistory = async () => {
+		console.log("llamada");
+
+		productHistory.forEach(productId => {
+			axios
+				.post(`${vetAPI}/user/updateUserProdHist/${productId}&${tempId}`)
+				.then(result => {
+					console.log(result);
+				})
+				.catch(err => {
+					console.log(err);
+				});
+		});
 	};
 
 	const getAllItems = async () => {

@@ -34,7 +34,7 @@ const Products = props => {
 											}}
 										>
 											<button
-												// onClick={() => props.onHistoryAdd(product._id)}
+												onClick={() => props.onHistoryAdd(product._id)}
 												className="btn btn-primary"
 											>
 												Ver producto
