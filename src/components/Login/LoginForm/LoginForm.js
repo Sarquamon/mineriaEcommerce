@@ -14,7 +14,7 @@ const LoginForm = props => {
 					<input
 						type="email"
 						required
-						name="useremail"
+						name="userEmail"
 						id="userEmailLog"
 						placeholder=""
 					/>
@@ -24,14 +24,16 @@ const LoginForm = props => {
 					<label>
 						<span className="req">* </span>Contraseña:
 					</label>
-					<input type="password" name="userpwd" id="userPassLog" required />
+					<input type="password" name="userPwd" id="userPassLog" required />
 				</div>
 
 				<p className="forgot">
 					<Link to="forgot.html">Olvidaste tu contraseña</Link>
 				</p>
 
-				<button className="button button-block">Entrar</button>
+				<button type="submit" className="button button-block">
+					Entrar
+				</button>
 			</form>
 		</div>
 	);

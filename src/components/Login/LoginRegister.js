@@ -1,6 +1,7 @@
 import React, {useState} from "react";
-
 import axios from "axios";
+
+import {useHistory} from "react-router-dom";
 
 import "./LoginRegister.css";
 import RegisterForm from "./RegisterForm/RegisterForm";
@@ -8,80 +9,75 @@ import LoginForm from "./LoginForm/LoginForm";
 
 const vetAPI = "http://localhost:2000/";
 
-const checkEmail = async useremail => {
-	const result = await axios.get(`${vetAPI}/user/email/${useremail}`);
-
-	return result.data.userEmail;
-};
-
-const checkPwd = async (useremail, userPwd) => {
-	const result = await axios.get(`${vetAPI}/user/email/${useremail}`);
-
-	return result.data.userPwd;
-};
-
-const createUser = async (username, userlastname, useremail, userpwd) => {
-	axios
-		.post(`${vetAPI}/create/user/`, {
-			userEmail: useremail,
-			username: username,
-			userPwd: userpwd,
-			firstName: username,
-			surName: userlastname,
-			address: "Corfu 72",
-			isVet: true,
-			activeUser: true
-		})
-		.then(res => console.log(`exito! ${res.data}`))
-		.catch(err => console.log(`error! ${err}`));
-};
-
-const register = async e => {
-	const username = e.target.elements.username.value;
-	const userlastname = e.target.elements.userlastname.value;
-	const useremail = e.target.elements.useremail.value;
-	const userpwd = e.target.elements.userpwd.value;
-	const userpwd2 = e.target.elements.userpwd2.value;
-
-	e.preventDefault();
-
-	if (userpwd === userpwd2) {
-		const emailExists = await checkEmail(useremail);
-		// console.log(emailExists);
-		if (!emailExists) {
-			createUser(username, userlastname, useremail, userpwd);
-		} else {
-			console.log(`Existe`);
-		}
-	} else {
-		console.log(`Contraseñas no son iguales`);
-	}
-};
-
-const login = async e => {
-	const useremail = e.target.elements.useremail.value;
-	const userpwd = e.target.elements.userpwd.value;
-
-	e.preventDefault();
-
-	const userExists = await checkEmail(useremail);
-	console.log(userExists);
-	if (userExists) {
-		console.log(`Usuario ya existe`);
-		const rightpwd = await checkPwd(useremail, userpwd);
-		if (rightpwd) {
-			console.log(`correcta`);
-		} else {
-			console.log(`incorrecta`);
-		}
-	} else {
-		console.log(`no existe`);
-	}
-};
-
 export const LoginRegister = () => {
+	const history = useHistory();
 	const [loginBtn, setloginBtn] = useState("visible");
 	const [registerBtn, setregisterBtn] = useState("invisible");
+
+	// const checkEmail = async useremail => {};
+
+	// const checkPwd = async (useremail, userPwd) => {};
+
+	const register = async e => {
+		e.preventDefault();
+
+		const useremail = e.target.elements.userEmail.value;
+		const userpwd = e.target.elements.userPwd.value;
+
+		const response = await axios.post(`${vetAPI}user/signup`, {
+			userEmail: useremail,
+			userPwd: userpwd
+		});
+
+		console.log(response);
+		if (response) {
+			if (response.status === 201) {
+				history.push("/loginRegister");
+				window.location.reload();
+			}
+		}
+	};
+
+	const login = async e => {
+		e.preventDefault();
+
+		const useremail = e.target.elements.userEmail.value;
+		const userpwd = e.target.elements.userPwd.value;
+
+		const response = await axios.post(`${vetAPI}user/login`, {
+			userEmail: useremail,
+			userPwd: userpwd
+		});
+
+		if (response) {
+			if (response.status === 200) {
+				// console.log(response.data.userId);
+				const userId = response.data.userId;
+				// console.log(response.data.token);
+
+				const token = response.data.token;
+				// console.log(response.data.token);
+				const useremail = response.data.userEmail;
+
+				localStorage.setItem("userId", userId);
+				localStorage.setItem("token", token);
+				localStorage.setItem("useremail", useremail);
+
+				history.push("/");
+				window.location.reload();
+			} else {
+				alert("Verificar informacion!");
+			}
+		}
+	};
+
+	const logout = () => {
+		localStorage.removeItem("userId");
+		localStorage.removeItem("token");
+		localStorage.removeItem("useremail");
+
+		window.location.reload();
+	};
 
 	const changeView = buttonId => {
 		if (buttonId === "loginBtn") {

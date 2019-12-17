@@ -16,7 +16,7 @@ const Products = props => {
 									<img
 										src={`${product.productImage}`}
 										className="card-img-top"
-										alt=""
+										alt={product.productName}
 										height="190px"
 									/>
 									<div className="card-body">

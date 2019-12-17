@@ -4,6 +4,14 @@ import {Link as NavLink} from "react-router-dom";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import logo from "../../img/logo.png";
 
+const checkUserEmail = () => {
+	if (localStorage.getItem("useremail")) {
+		return true;
+	} else {
+		return false;
+	}
+};
+
 const Navbar = () => {
 	return (
 		<nav className="navbar navbar-expand-lg navbar-light sticky-nav custom-nav justify-content-around">
@@ -35,9 +43,28 @@ const Navbar = () => {
 					</ul>
 					<ul className="navbar-nav ml-auto">
 						<li className="nav-item">
-							<NavLink to="/loginRegister" className="nav-link">
+							{checkUserEmail() ? (
+								<NavLink
+									to="/loginRegister"
+									onClick={() => {
+										localStorage.removeItem("userId");
+										localStorage.removeItem("token");
+										localStorage.removeItem("useremail");
+
+										window.location.reload();
+									}}
+									className="nav-link"
+								>
+									{localStorage.getItem("useremail")}
+								</NavLink>
+							) : (
+								<NavLink to="/loginRegister" className="nav-link">
+									Unirme/Iniciar Sesi&oacute;n
+								</NavLink>
+							)}
+							{/* <NavLink to="/loginRegister" className="nav-link">
 								Unirme/Iniciar Sesi&oacute;n
-							</NavLink>
+							</NavLink> */}
 						</li>
 						<li className="nav-item">
 							<NavLink to="/" className="nav-link">
